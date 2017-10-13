@@ -138,7 +138,7 @@ public class Main extends JFrame {
                 System.out.print((char)k);
             }
             fis.close();
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             System.out.println("IOException occurred: " + e);
         }
 
