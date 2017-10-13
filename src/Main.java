@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main extends JFrame {
 
@@ -112,6 +115,25 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
+        int k;
+        FileInputStream fis = null;
+
+        try {
+            fis = new FileInputStream("src/data.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("No such file");
+        }
+
+        try {
+            while(( k = fis.read() ) != -1)
+            {
+                System.out.print((char)k);
+            }
+            fis.close();
+        } catch (IOException e) {
+            System.out.println("IOException occurred: " + e);
+        }
+
         javax.swing.SwingUtilities.invokeLater(() -> createAndShowGui());
 
     }
