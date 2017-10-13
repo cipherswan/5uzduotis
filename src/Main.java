@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,6 +15,7 @@ public class Main extends JFrame {
     public Main() {
         createAndShowGui();
     }
+
 
 
     private static void createAndShowGui() {
@@ -83,14 +86,17 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //graphics
                 JFrame secondFrame = new JFrame("Second");
-                JPanel secondPanel = new JPanel(new GridLayout());
+                JPanel secondPanel = new JPanel();
+                secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.PAGE_AXIS));
                 secondFrame.setSize(350, 250);
 
                 secondPanel.add(new Drawing());
 
+
                 secondFrame.getContentPane().add(secondPanel);
 
                 secondFrame.setVisible(true);
+
 
             }
         });
@@ -112,12 +118,14 @@ public class Main extends JFrame {
 
         mainFrame.getContentPane().add(mainPanel);
         mainFrame.setVisible(true);
+
     }
 
     public static void main(String[] args) {
         int k;
         FileInputStream fis = null;
 
+        //checked
         try {
             fis = new FileInputStream("src/data.txt");
         } catch (FileNotFoundException e) {
