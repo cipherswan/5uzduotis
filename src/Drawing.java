@@ -6,19 +6,47 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 
-public class Drawing extends JPanel {
-    Color c = Color.red;
-    Rectangle2D rect = new Rectangle2D.Double(20, 20, 50, 50);
-    Rectangle2D rect2 = new Rectangle2D.Double(80, 20, 50, 50);
+public class Drawing extends JPanel implements MouseListener {
+    private Rectangle2D rect;
+    private Rectangle2D rect2;
 
 
     public void paintComponent(Graphics g) {
-        Graphics2D graphics2D = (Graphics2D) g;
         super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D)(g);
+        g2d.setColor(Color.GREEN);
+        rect = new Rectangle2D.Double(1, 10, 100, 100);
+        rect2 = new Rectangle2D.Double(200, 10, 100, 100);
 
-        graphics2D.setPaint(c);
-        graphics2D.fill(rect);
-        graphics2D.fill(rect2);
+        g2d.fill(rect);
+        g2d.fill(rect2);
+        this.addMouseListener(this);
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if(rect2.contains(e.getX(), e.getY()))
+            System.out.println("Rectangle clicked");
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
