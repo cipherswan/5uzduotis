@@ -9,13 +9,19 @@ import java.awt.event.MouseListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class Main extends JFrame {
+public class Main extends JFrame implements Runnable{
+
 
     public Main() {
         createAndShowGui();
     }
 
+    public void run() {
+        System.out.println("thread1 started");
+    }
 
 
     private static void createAndShowGui() {
@@ -25,6 +31,7 @@ public class Main extends JFrame {
         JButton firstButton = new JButton("first");
         JButton secondButton = new JButton("second");
         JButton cancelButton = new JButton("Cancel");
+
 
         firstButton.addActionListener(e -> {
             JFrame firstFrame = new JFrame("First");
@@ -65,15 +72,12 @@ public class Main extends JFrame {
             firstFrame.setVisible(true);
 
             //OK button listener
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Integer age = Integer.parseInt(ageField.getText());
+            button.addActionListener(e13 -> {
+                Integer age = Integer.parseInt(ageField.getText());
 
-                    if (age < 21) {
-                        //unchecked exception
-                        throw new ArithmeticException("You must be at least 21 years old");
-                    }
+                if (age < 21) {
+                    //unchecked exception
+                    throw new ArithmeticException("You must be at least 21 years old");
                 }
             });
 
@@ -82,10 +86,27 @@ public class Main extends JFrame {
             //graphics
             JFrame secondFrame = new JFrame("Second");
             JPanel secondPanel = new JPanel();
+
+            JButton testButton = new JButton("Button 1");
+            testButton.addActionListener(e1 -> {
+                Thread thread = new Thread(() -> System.out.println("button 1 pressed"));
+                thread.start();
+            });
+
+            JButton test2Button = new JButton("Button 2");
+            test2Button.addActionListener(e12 -> {
+                Thread thread2 = new Thread(() -> System.out.println("button 2 pressed"));
+                thread2.start();
+            });
+
+
             secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.PAGE_AXIS));
             secondFrame.setSize(350, 250);
 
+
             secondPanel.add(new Drawing());
+            secondPanel.add(testButton);
+            secondPanel.add(test2Button);
 
 
             secondFrame.getContentPane().add(secondPanel);
@@ -132,6 +153,7 @@ public class Main extends JFrame {
                 System.out.print((char)k);
             }
             fis.close();
+            System.out.println("");
         } catch (IOException | NullPointerException e) {
             System.out.println("IOException occurred: " + e);
         }
